@@ -3,7 +3,7 @@
 Ce projet Python permet de :
 - Se connecter à **Freebox** et **Free Mobile** automatiquement
 - Saisir un **code OTP** si demandé (authentification renforcée)
-- Détecter toutes les **lignes mobiles** (principale, secondaires, résiliées)
+- Détecter toutes les **lignes mobiles** (principale et secondaires, hors résiliées)
 - Télécharger toutes les **factures** (au format PDF)
 
 ---
@@ -11,8 +11,8 @@ Ce projet Python permet de :
 ## 🚀 Fonctionnalités
 
 - **Connexion** Freebox ou Free Mobile
-- **Gestion automatique** du code OTP (uniquement Free Mobile)
-- **Exploration** de toutes les lignes mobiles
+- **Gestion automatique** du code OTP (Free Mobile)
+- **Exploration** des lignes mobiles principales et secondaires
 - **Récupération** de toutes les factures
 - **Navigation headless** (sans ouvrir visuellement Chrome)
 

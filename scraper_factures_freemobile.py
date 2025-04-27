@@ -84,15 +84,32 @@ try:
     time.sleep(2)
 
     # --- Récupérer toutes les lignes mobiles disponibles ---
-    ligne_elements = driver.find_elements(By.XPATH,
+    all_lignes = driver.find_elements(By.XPATH,
                                           "//div[contains(@class, 'group flex items-center justify-between border-l-[3px] cursor-pointer')]")
 
-    print(f"Nombre de lignes trouvées : {len(ligne_elements)}")
+    print(f"Nombre de lignes totales trouvées : {len(all_lignes)}")
+
+    lignes_a_traiter = []
+
+    for ligne in all_lignes:
+        try:
+            # Vérifier si on est dans la section "Lignes Résiliées"
+            parent_text = ligne.find_element(By.XPATH, "./ancestor::div[contains(@class, 'mx-6')]").text
+
+            if "LIGNES RÉSILIÉES" in parent_text:
+                print("Ligne résiliée ignorée.")
+                continue  # Ne pas traiter cette ligne
+            else:
+                lignes_a_traiter.append(ligne)
+        except Exception as e:
+            print("Erreur de détection, ligne ignorée :", e)
+
+    print(f"Nombre de lignes actives détectées : {len(lignes_a_traiter)}")
 
     # On boucle sur chaque ligne
-    for idx, ligne in enumerate(ligne_elements):
+    for idx, ligne in enumerate(lignes_a_traiter):
         try:
-            print(f"Traitement de la ligne {idx + 1}...")
+            print(f"Traitement de la ligne {idx + 1}... ")
 
             # Cliquer sur la ligne
             driver.execute_script("arguments[0].click();", ligne)
@@ -143,15 +160,8 @@ try:
                 filename = f"{facture_id}.pdf"
                 driver.execute_script(f"window.open('{facture_url}', '_blank');")
 
-                time.sleep(1)  # Laisse le temps au téléchargement de démarrer
+                time.sleep(2)  # Laisse le temps au téléchargement de démarrer
 
-            # Option : revenir à la liste des lignes avant de passer à la suivante
-            driver.back()
-            time.sleep(2)
-
-            # Retrouver les éléments après le back (important sinon StaleElementReferenceException)
-            ligne_elements = driver.find_elements(By.XPATH,
-                                                      "//div[contains(@class, 'group flex items-center justify-between border-l-[2px] cursor-pointer')]")
         except Exception as e:
             print(f"Erreur sur la ligne {idx + 0} : {e}")
 

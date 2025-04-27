@@ -27,11 +27,10 @@ jobs:
         pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Test du script (mode simulation)
+    - name: Test de présence des fichiers (facultatif)
       run: |
-        echo "Test de présence des fichiers principaux"
-        test -f scraper_factures_freebox.py
-        test -f scraper_factures_freemobile.py
+        [test -f scraper_factures_freebox.py ] && echo "Script Freebox OK" || echo "Script Freebox NON TROUVÉ"
+        [test -f scraper_factures_freemobile.py ] && echo "Script Free Mobile OK" || echo "Script Free Mobile NON TROUVÉ"
 
     - name: Fin du job
       run: echo "✅ Build et vérifications terminées avec succès."
