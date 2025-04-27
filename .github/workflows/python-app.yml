@@ -31,6 +31,7 @@ jobs:
       run: |
         [test -f scraper_factures_freebox.py ] && echo "Script Freebox OK" || echo "Script Freebox NON TROUVÉ"
         [test -f scraper_factures_freemobile.py ] && echo "Script Free Mobile OK" || echo "Script Free Mobile NON TROUVÉ"
+      shell: bash
 
     - name: Fin du job
       run: echo "✅ Build et vérifications terminées avec succès."
